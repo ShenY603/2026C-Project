@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Acceptor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Buffer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Channel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\CurrentThread.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\DefaultPoller.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\EPollPoller.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\EventLoop.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\EventLoopThread.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\EventLoopThreadPool.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\InetAddress.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Logger.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Poller.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Socket.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\TcpConnection.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\TcpServer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Thread.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S:\JLpro\muduo-core\src\Timestamp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="S:\JLpro\muduo-core\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{A4A70287-FCD2-3279-AE0C-0114998A8EE0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
