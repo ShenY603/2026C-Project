@@ -1,2 +1,2 @@
-PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.44.35207:TargetPlatformVersion=10.0.26100.0:
-Debug|x64|S:\JLpro\muduo-core\build\CMakeFiles\3.28.1\CompilerIdC\|
+PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.44.35207:TargetPlatformVersion=10.0.26100.0:VcpkgTriplet=x86-windows:
+Debug|win32|S:\2026Project\CProject\2026C-Project\build\CMakeFiles\3.28.1\CompilerIdC\|

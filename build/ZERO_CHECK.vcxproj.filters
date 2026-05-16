@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="S:\JLpro\muduo-core\build\CMakeFiles\739e93a7918cea87e224862e9181fd95\generate.stamp.rule">
+    <CustomBuild Include="S:\2026Project\CProject\2026C-Project\build\CMakeFiles\9713b9e0773a481f1342691c56be0da8\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{DAC6C2A2-5A4B-3D31-96B5-E384168D7A17}</UniqueIdentifier>
+      <UniqueIdentifier>{C0DAD3CD-5BDB-3DD0-AAB7-D002045B4A78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

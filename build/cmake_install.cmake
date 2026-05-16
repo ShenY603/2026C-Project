@@ -1,4 +1,4 @@
-# Install script for directory: S:/JLpro/muduo-core
+# Install script for directory: S:/2026Project/CProject/2026C-Project
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("S:/JLpro/muduo-core/build/src/cmake_install.cmake")
-  include("S:/JLpro/muduo-core/build/example/cmake_install.cmake")
+  include("S:/2026Project/CProject/2026C-Project/build/src/cmake_install.cmake")
+  include("S:/2026Project/CProject/2026C-Project/build/example/cmake_install.cmake")
 
 endif()
 
@@ -47,5 +47,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "S:/JLpro/muduo-core/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "S:/2026Project/CProject/2026C-Project/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
