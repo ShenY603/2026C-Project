@@ -10,7 +10,7 @@
 - **跨线程唤醒**：`eventfd` + `queueInLoop`，向指定 loop 投递任务。
 - **示例**：`example/testserver.cc` 为多线程 Echo 服务。
 
-本仓库为个人即时应用实践向裁剪实现，**不包含**官方 muduo 的 HTTP、Protobuf、异步日志等完整子系统。
+本仓库为个人应用实践向裁剪实现，**不包含**官方 muduo 的 HTTP、Protobuf、异步日志等完整子系统。
 
 ## 环境要求
 
@@ -78,15 +78,53 @@ muduo-core/
 2. **从 reactor**：`setThreadNum(n)` 后启动 `n` 个 `EventLoopThread`，每个线程内一个 `EventLoop::loop()`。
 3. 新连接在 `TcpServer::newConnection` 中通过 `getNextLoop()` 选定 `ioLoop`，并以 `ioLoop->runInLoop(&TcpConnection::connectEstablished)` 在 **对应 sub loop 线程** 内向该 loop 的 `Poller` 注册 connfd（如 `enableReading` → `epoll_ctl`）。
 
+## 压测结果
+
+对 `example/testserver`（Multi-Reactor Echo，`setThreadNum(3)`）进行压测。压测前已注释 `onConnection` / `onMessage` 中的 `LOG_INFO`，避免日志 IO 影响结果。
+
+### 测试环境
+
+| 项 | 配置 |
+|----|------|
+| 服务端 | 2 核 CPU、2 GiB 内存、**公网带宽 1 Mbps**、通用型 SSD 云主机（Ubuntu） |
+| 客户端（公网） | Windows 11，Intel i7-12700H，32 GiB 内存 |
+| 服务端口 | `0.0.0.0:8080` |
+| 压测时长 | 每轮 30 s |
+| 压测工具 | Python 脚本 `bench_echo.py`（多线程并发 TCP Echo，统计总往返次数与 **approx_qps**） |
+
+**指标说明：** `approx_qps` = 所有连接在测试时间内的 **往返次数之和 / 墙钟时间**，表示 **全链路总吞吐（次/秒）**，非单连接 QPS。
+
+### 公网压测（PC → 云公网 IP）
+
+| 并发连接 | 消息大小 | 总往返次数 | approx_qps | 说明 |
+|----------|----------|------------|------------|------|
+| 20 | 64 B | 31,850 | **1,060** | 基准 |
+| 50 | 64 B | 29,561 | **938** | 增加连接后 QPS 略降，带宽已饱和 |
+| 20 | 256 B | 11,748 | **388** | 包长增大，QPS 明显下降 |
+
+**结论：** 公网场景下吞吐受 **1 Mbps 带宽与 RTT** 制约；提高并发或增大消息长度无法显著提升 QPS。
+
+### 本机回环压测（云主机 `127.0.0.1`，避开公网带宽）
+
+| 并发连接 | 消息大小 | 总往返次数 | approx_qps | 说明 |
+|----------|----------|------------|------------|------|
+| 50 | 64 B | 862,049 | **28,496** | 约为公网（20 连接、64 B）的 **27 倍** |
+| 100 | 64 B | 854,984 | **28,029** | 增加连接后 QPS 基本持平，**CPU 已饱和** |
+| 50 | 256 B | 845,483 | **28,009** | 包长增大对 QPS 影响很小 |
+
+**结论：** 本机回环下可验证服务在 **loopback** 上具备更高吞吐；服务端与压测客户端同机共享 CPU，约 **2.8 万** 次往返/秒为当前 2 核环境下的参考上限。
+
+### 简要对比
+
+```
+公网 1 Mbps（64 B, 20 连接）  ≈ 1.0k  往返/秒  →  带宽瓶颈
+本机回环（64 B, 50 连接）     ≈ 28k   往返/秒  →  CPU 瓶颈（同机压测）
+```
+
+复现压测可使用多线程 TCP Echo 脚本（将 `HOST` 设为公网 IP 或 `127.0.0.1`，并按场景调整 `CONNS`、`MSG`、`DURATION`）。
+
 ## 参考
 
 - 官方 muduo：<https://github.com/chenshuo/muduo/>
 - 《Linux 多线程服务端编程：使用 muduo C++ 网络库》，陈硕
 - 《Linux 高性能服务器编程》，游双
-
-## 26.5.16
-## 压测的初步计划及步骤规划
-1. 压测前关掉「每条连接都打日志」
-onConnection 里对每个连接 LOG_INFO，高并发下磁盘/控制台会成为主要瓶颈，测出来的 QPS 会失真。压测时建议注释或改成极低频日志，再重新编译。
-2. 用 Python 快速验证（示例思路）
-在 Linux/WSL 上装 Python 3 后，可用 asyncio 开多个协程，每个里 open_connection，循环 write / readexactly。把「并发连接数、每连接请求数、payload 长度」做成参数，跑完打印总耗时和 QPS。
