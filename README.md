@@ -85,4 +85,8 @@ muduo-core/
 - 《Linux 高性能服务器编程》，游双
 
 ## 26.5.16
-压测的初步计划及步骤规划
+## 压测的初步计划及步骤规划
+1. 压测前关掉「每条连接都打日志」
+onConnection 里对每个连接 LOG_INFO，高并发下磁盘/控制台会成为主要瓶颈，测出来的 QPS 会失真。压测时建议注释或改成极低频日志，再重新编译。
+2. 用 Python 快速验证（示例思路）
+在 Linux/WSL 上装 Python 3 后，可用 asyncio 开多个协程，每个里 open_connection，循环 write / readexactly。把「并发连接数、每连接请求数、payload 长度」做成参数，跑完打印总耗时和 QPS。
